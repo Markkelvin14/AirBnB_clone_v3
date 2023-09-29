@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieve an obj with class name and id"""
-        obj_list = self.__session.query(models.classes[cls]).all()
+        obj_list = self.__session.query(eval(cls)).all()
         for obj in obj_list:
             if obj.id == str(id):
                 return obj
@@ -87,5 +87,5 @@ class DBStorage:
         """count the number of objects in storage"""
         count = 0
         class_list = self.all(cls)
-        count = len(class_dict)
+        count = len(class_list)
         return count
