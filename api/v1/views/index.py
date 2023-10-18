@@ -1,19 +1,19 @@
 #!/usr/bin/python3
-""" returns json statuses for app_views routes  """
+"""flask routes"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 
-@app_views.route("/status")
+
+@app_views.route('/status', strict_slashes=False)
 def status():
     """return JSON of OK status"""
-    return jsonify({'status': 'OK'})
+    return jsonify({"status": "OK"})
 
-@app_views.route("/stats")
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def storage_counts():
     """return counts of all classes in storage"""
-
-    cls_counts = {
+    counts = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
@@ -21,4 +21,8 @@ def storage_counts():
         "states": storage.count("State"),
         "users": storage.count("User")
     }
-    return jsonify(cls_counts)
+    return jsonify(counts)
+
+
+if __name__ == "__main__":
+    pass

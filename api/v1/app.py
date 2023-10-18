@@ -9,15 +9,18 @@ from os import getenv
 app = Flask(__name__)
 cors = CORS(app, resources={'/*': {'origins': '0.0.0.0'}})
 app.register_blueprint(app_views, url_prefix="/api/v1")
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
 
 @app.teardown_appcontext
 def tear_down(self):
     """close query after each session"""
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
-    """return JSON formatted 404 status code response"""
+    """Returns a JSON-formatted error response"""
     return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main__":
